@@ -15,6 +15,7 @@ function HomePage() {
           <h2>Cocktails</h2>
 
           <Link to= "/cocktails"><button>Cocktails</button></Link>
+          
 
 
 
