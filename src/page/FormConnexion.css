@@ -1,0 +1,42 @@
+
+.App {
+  text-align: center;
+  margin-top: 30px;
+  border:1px solid ;
+  margin-left: 40%;
+  margin-right: 40%;
+  border-radius: 20px;
+  padding: 10px;
+  
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+}
+
+label {
+  margin-bottom: 10px;
+  display: flex;
+  
+}
+
+input {
+  margin-bottom: 15px;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+h2{
+ top: 10px;
+ display: flex;
+ justify-content: center;
+}

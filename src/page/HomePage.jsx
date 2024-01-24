@@ -1,5 +1,7 @@
+import Footer from "../component/Footer";
 import Header from "../component/Header"
-import { Link } from "react-router-dom";
+import "./HomePage.css"
+//import { Link } from "react-router-dom";
 
 
 function HomePage() {
@@ -10,18 +12,45 @@ function HomePage() {
         <>
         <Header/>
        <main>
-        <section>
-            
-          <h2>Cocktails</h2>
+              <h2>Top desserts au chocolat</h2>
+        <section className="top">
+            <div>
+              <h4>Nom dessert</h4>
+              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
+              <p>Description</p>
+            </div>
+            <div>
+              <h4>Nom dessert</h4>
+              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
+              <p>Description</p>
+            </div>
+            <div>
+              <h4>Nom dessert</h4>
+              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
+              <p>Description</p>
+            </div>
+          </section>
 
-          <Link to= "/cocktails"><button>Cocktails</button></Link>
-          
-
-
-
-        </section>
+              <h2>Top desserts aux fruits</h2>
+          <section>
+            <div>
+              <h4>Nom dessert</h4>
+              <img className="img_HP" src="/assets/img/logo.png" alt="teste" />
+              <p>Description</p>
+            </div>
+            <div>
+              <h4>Nom dessert</h4>
+              <img className="img_HP" src="/assets/img/logo.png" alt="teste" />
+              <p>Description</p>
+            </div>
+            <div>
+              <h4>Nom dessert</h4>
+              <img className="img_HP" src="/assets/img/logo.png" alt="teste" />
+              <p>Description</p>
+            </div>
+          </section>
        </main>
-     
+     <Footer/>
        </>
     )
 }

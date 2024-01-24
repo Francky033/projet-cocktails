@@ -3,13 +3,23 @@ import { Link } from "react-router-dom";
 function Header() {
     return (
 <header>
-      <h1>Cocktails</h1>
       <nav>
-        <ul>
-          <Link to= "/"><button>Home</button></Link>
-          <Link to= "/cocktails"><button>Cocktails</button></Link>
-          <Link to= "/random/cocktails"><button>Random Cocktails</button></Link>
+        <div className="logo">
+          <Link to= "/"><img src="/assets/img/logo.png" alt="logo" /></Link>
+        </div>
+        <div>
+          <ul className="midle_nav">
+            <li className="barnav"><Link to="/desserts/chocolat">Desserts au chocolat</Link></li>
+            <li className="barnav"><Link to="/desserts/fruits">Desserts aux fruits</Link></li>
+          </ul>
+        </div>
+        <div>
+          <ul className="end_nav">
+          <li><Link to= "/connexion"><button className="btn_connect">Je me connecte</button></Link></li>
+          <li><Link to= "/inscription"><button className="btn_inscrit">Je m'inscris</button></Link></li>
         </ul>
+        </div>
+        
       </nav>
     </header>
     );

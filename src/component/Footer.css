@@ -1,0 +1,6 @@
+footer{
+    display: flex;
+    justify-content: center;
+    background: rgb(189,127,64);
+    background: linear-gradient(0deg, rgba(189,127,64,1) 6%, rgba(255,255,255,1) 100%);
+}

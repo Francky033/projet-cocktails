@@ -1,10 +1,11 @@
 // le ".then()" permet de recuperer et gerer la reponse d'une requete asynchrone
 import { useState } from "react";
 import Header from "../component/Header";
+import { Link } from "react-router-dom";
 
-function CocktailsPage() {
-  const [cocktails, setCocktails] = useState(null) // "useState" permet de dynamiser une valeur(nom,valeurs,couleur..), donc de la rendre evolutif 
-   if (!cocktails) {
+function DrinksPage() {
+  const [drinkspage, setDrinkspage] = useState(null) // "useState" permet de dynamiser une valeur(nom,valeurs,couleur..), donc de la rendre evolutif 
+   if (!drinkspage) {
 //       fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=")// la fonction fetch permet de recuper une API via son URL
 //     .then((response) => {
 //       return response.json(); // convertit la reponse en JSON
@@ -13,9 +14,9 @@ function CocktailsPage() {
 //       setCocktails(json.drinks);  // affiche le fichier JSON lisible par les utilisateurs
 //     });
 (async () => {    // "await" permet d'attendre une reponse(la reponse du fetch)
-     const response = await fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=");
+     const response = await fetch(" https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list");
      const json = await response.json();
-     setCocktails(json.drinks);
+     setDrinkspage(json.drinks);
   })()
    }
 
@@ -25,15 +26,17 @@ function CocktailsPage() {
     <>
     <main>
       <Header/>
-      {cocktails ? (  // le "?" remplace le "if" en JS
+      {drinkspage ? (  // le "?" remplace le "if" en JS
         <>
-          {cocktails.map((cocktail) => {
+          {drinkspage.map((drinkspage) => {
             return (
               <article>
-                <h2>{cocktail.strDrink}</h2>
-                <p>Categorie : {cocktail.strCategory}</p>
-                <img src={cocktail.strDrinkThumb} alt={cocktail.strDrinkThumb} />
-                <p>Modifié le : {cocktail.dateModified}</p>
+                {drinkspage.strCategory == "Cocktail" && (
+                    <Link to= "/cocktails"><button>{drinkspage.strCategory}</button></Link>
+                )}
+                <h2>{drinkspage.strDrink}</h2>
+                <p>Categorie : {drinkspage.strCategory}</p>
+                
               </article>
             );
           })}
@@ -45,4 +48,4 @@ function CocktailsPage() {
     </>
     ) 
 }
-export default CocktailsPage;
+export default DrinksPage
