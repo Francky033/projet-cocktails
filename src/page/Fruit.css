@@ -1,0 +1,24 @@
+
+.top2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .img_choco {
+    width: 100%;
+    height: 30rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .img_choco:hover {
+    transform: scale(1.1);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .top2 {
+      grid-template-columns: 1fr;
+    }
+  }
+  

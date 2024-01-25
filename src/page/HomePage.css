@@ -1,6 +1,10 @@
 
 
 @media screen and (min-width: 500px) {
+
+  .top{
+    margin-bottom: 350px;
+  }
     section {
       display: flex;
       text-align: center;
@@ -9,11 +13,16 @@
       justify-content: space-around;
       margin: 5%;
     }
-  
+  .dessertbox{
+    width: 30%;
+    height: 250px;
+  }
+
+
     div .img_HP {
       border-radius: 50px;
       width: 100%;
-      height: auto;
+      height: 100%;
       padding: 5%;
       transition: transform 0.3s ease-in-out;
     }

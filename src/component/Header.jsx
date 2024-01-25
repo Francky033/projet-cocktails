@@ -1,6 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
+
+  const token=localStorage.getItem('jwt')
+  const navigate = useNavigate()
+  const handleLogout =()=>{
+    localStorage.removeItem("jwt")
+    navigate("/")
+  }
+
     return (
 <header>
       <nav>
@@ -15,8 +23,18 @@ function Header() {
         </div>
         <div>
           <ul className="end_nav">
-          <li><Link to= "/connexion"><button className="btn_connect">Je me connecte</button></Link></li>
-          <li><Link to= "/inscription"><button className="btn_inscrit">Je m'inscris</button></Link></li>
+            {
+              token===null ? (
+                <>
+                <li><Link to= "/connexion"><button className="btn_connect">Je me connecte</button></Link></li>
+                <li><Link to= "/inscription"><button className="btn_inscrit">Je m'inscris</button></Link></li>
+                </>
+
+
+              ):(
+                <li><button className="btn_connect" onClick={handleLogout}>Je me déconnecte</button></li>
+              )
+            }
         </ul>
         </div>
         

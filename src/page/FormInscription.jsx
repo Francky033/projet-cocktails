@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './FormInscription.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../component/Header';
 import Footer from '../component/Footer';
 
@@ -8,15 +8,34 @@ const FormInscription = () => {
   const [pseudo, setPseudo] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(null)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Ajoutez ici la logique de validation ou d'inscription avec les informations fournies.
-    console.log('Pseudo:', pseudo);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
+  const navigate = useNavigate()
+
+  const handleSubmit =async (event) => {
+    event.preventDefault();
+    const username = event.target.username.value
+    const password = event.target.password.value
+    const email = event.target.email.value
+const userToCreate = {
+        username : username,
+        password : password,
+        email : email}
+
+        
+const userCreateToJson = JSON.stringify(userToCreate)
+    const createUserResponse = await fetch("http://localhost:3003/api/users", {
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : userCreateToJson
+    })
+    if(createUserResponse.status === 200 || createUserResponse.status === 201 ) {
+        setMessage(`Merci de votre inscription`)
+        navigate('/connexion')
+    }
+    else {setMessage(`L'utilisateur existe deja`)}
   };
 
   return (
@@ -29,7 +48,7 @@ const FormInscription = () => {
         </div>
       <form onSubmit={handleSubmit}>
         <label>
-          <input
+          <input name='username'
             placeholder='Pseudo*'
             type="text"
             value={pseudo}
@@ -39,7 +58,7 @@ const FormInscription = () => {
         <br />
         <label>
          
-          <input
+          <input name='email'
             placeholder='Email*'
             type="email"
             value={email}
@@ -48,7 +67,7 @@ const FormInscription = () => {
         </label>
         <br />
         <label>
-          <input
+          <input name='password'
             placeholder='Mot de passe*'
             type="password"
             value={password}
@@ -56,19 +75,10 @@ const FormInscription = () => {
           />
         </label>
         <br />
-        <label>
-          
-          <input
-            placeholder='Confirmer le mot de passe*'
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </label>
-        <br />
         <p>* Champs obligatoire</p>
         <button className='btn_inscrit' type="submit">Je m'inscrit</button>
       </form>
+      {message && <p>{message}</p>}
       <Link to="/connexion"><p>J'ai déjà un compte, je me connecte</p></Link>
     </div>
 

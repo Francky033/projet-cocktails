@@ -1,75 +1,44 @@
+import { useEffect, useState } from "react";
 import Footer from "../component/Footer";
 import Header from "../component/Header"
 import "./Fruit.css"
-//import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 function Fruit() {
 
 
+  const [fruit, setFruit] = useState([])
+    useEffect(()=>{
+      (async()=>{
+          const responseOfFetch = await fetch(`http://localhost:3003/api/dessert`)
+          const responseToJson = await responseOfFetch.json()
+  
+            setFruit(
+              responseToJson.filter(response => response.categorie === 'fruit')
+            )
+  
+            ;
+      })()
+    },[])
     return (
-        <>
-        <Header/>
-       <main>
-              <h2>Desserts aux fruits</h2>
-        <section className="top">
-            <div>
-                <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
-            <div>
-              <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
-            <div>
-              <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
+      <>
+        <Header />
+        <main>
+          <h2>Desserts au fruit</h2>
+          <section className="top2">
+            {fruit.map((fruit) => (
+              <div key={fruit.id}>
+                <h4>{fruit.nom}</h4>
+                <Link to={`/description/${fruit.id}`}><img className="img_choco" src={fruit.image} alt={fruit.nom} /></Link>
+                <p>{fruit.description}</p>
+              </div>
+            ))}
           </section>
-            
-          <section className="top">
-            <div>
-                <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
-            <div>
-              <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
-            <div>
-              <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
-          </section>
-          <section className="top">
-            <div>
-                <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
-            <div>
-              <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
-            <div>
-              <h4>Nom dessert</h4>
-              <img className="img_HP" src="https://kinsta.com/fr/wp-content/uploads/sites/4/2020/09/jpeg.jpg" alt="teste" />
-              <p>Description</p>
-            </div>
-          </section>
-
-
-       </main>
-     <Footer/>
-       </>
-    )
-}
-
-export default Fruit
+        </main>
+        <Footer />
+      </>
+    );
+  }
+  
+  export default Fruit;
