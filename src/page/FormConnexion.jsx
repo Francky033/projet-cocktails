@@ -29,8 +29,8 @@ const navigate = useNavigate()
           let decodedToken = jwtDecode(token)
           console.log(decodedToken.data);
             localStorage.setItem("jwt", token)
-            if(decodedToken.data.role === 1){
-                navigate('/')
+            if(decodedToken.role === 1){
+                navigate('/admin')
             } else {
                 navigate('/')
             }
@@ -54,8 +54,7 @@ const navigate = useNavigate()
       <div className="App">
         {isLoggedIn ? (
           <>
-            <p>Bienvenue!</p>
-            <button className='btn_connect' onClick={handleLogout}>Je me déconnecte</button>
+            
           </>
         ) : (
           <>

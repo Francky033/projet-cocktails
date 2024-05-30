@@ -6,6 +6,7 @@ import FormConnexion from './page/FormConnexion';
 import Chocolat from './page/Chocolat';
 import Fruit from './page/Fruit';
 import DescriptionPage from './page/DescriptionPage';
+import DashboardPage from './page/admin/Dashboardadmin';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/desserts/chocolat" element={<Chocolat/>} />
         <Route path="/desserts/fruits" element={<Fruit/>} />
         <Route path="/description/:id" element={<DescriptionPage/>} />
+        <Route path="/admin" element={<DashboardPage/>} />
 
 
        
