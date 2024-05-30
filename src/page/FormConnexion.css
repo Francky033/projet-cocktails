@@ -1,13 +1,11 @@
 
 .App {
+  
   text-align: center;
   margin-top: 30px;
   border:1px solid ;
-  margin-left: 40%;
-  margin-right: 40%;
   border-radius: 20px;
   padding: 10px;
-  
 }
 
 form {
@@ -27,6 +25,7 @@ input {
   margin-bottom: 15px;
   padding: 5px;
   border-radius: 10px;
+  
 }
 
 button {
@@ -39,4 +38,22 @@ h2{
  top: 10px;
  display: flex;
  justify-content: center;
+}
+
+/* Pour les écrans plus larges que 600px */
+@media (min-width: 600px) {
+  .App {
+    padding: 20px;
+  }
+}
+
+/* Pour les écrans plus petits ou égaux à 600px */
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+  .btn_connect {
+    width: 100%;
+    margin-top: 10px;
+  }
 }

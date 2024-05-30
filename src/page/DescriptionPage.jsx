@@ -29,7 +29,7 @@ function DescriptionPage() {
       const responseOfFetch = await fetch(`http://localhost:3003/api/reviews/${id}`);
       const responseToJson = await responseOfFetch.json();
 
-      // Assurez-vous que responseToJson est un tableau, sinon convertissez-le en tableau
+      
       const commentsArray = Array.isArray(responseToJson) ? responseToJson : [responseToJson];
 
       setCommentaires(commentsArray);
@@ -78,7 +78,7 @@ const Commentaires = ({ onCommentAdded }) => {
     <div>
       <h2>Commentaires</h2>
       <form className="com" onSubmit={handleCommentaire}>
-        <input
+        <textarea
           placeholder="Donnez votre avis"
           type="text"
           name="commentaire"

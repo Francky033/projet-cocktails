@@ -10,36 +10,50 @@ function Header() {
   }
 
     return (
+  // aria-label permet de facilité la navigation du site pour les mal voyants
 <header>
-      <nav>
-        <div className="logo">
-          <Link to= "/"><img src="/assets/img/logo.png" alt="logo" /></Link>
-        </div>
-        <div>
-          <ul className="midle_nav">
-            <li className="barnav"><Link to="/desserts/chocolat">Desserts au chocolat</Link></li>
-            <li className="barnav"><Link to="/desserts/fruits">Desserts aux fruits</Link></li>
-          </ul>
-        </div>
-        <div>
-          <ul className="end_nav">
-            {
-              token===null ? (
-                <>
-                <li><Link to= "/connexion"><button className="btn_connect">Je me connecte</button></Link></li>
-                <li><Link to= "/inscription"><button className="btn_inscrit">Je m'inscris</button></Link></li>
-                </>
+  <h1>LES DESSERTS DE FRANCKY</h1>
+  <nav aria-label="Menu principal">  
+    <div className="logo">
+      <Link to="/" aria-label="Retour à l'accueil">
+        <img src="/assets/img/logo.png" alt="Logo LES DESSERTS DE FRANCKY" />
+      </Link>
+    </div>
+    <div>
+      <ul className="midle_nav" aria-label="Navigation des desserts">
+        <li className="barnav">
+          <Link to="/desserts/chocolat" aria-label="Desserts au chocolat">Desserts au chocolat</Link>
+        </li>
+        <li className="barnav">
+          <Link to="/desserts/fruits" aria-label="Desserts aux fruits">Desserts aux fruits</Link>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <ul className="end_nav" aria-label="Options de connexion">
+        {token === null ? (
+          <>
+            <li>
+              <Link to="/connexion">
+                <button className="btn_connect" aria-label="Se connecter">Je me connecte</button>
+              </Link>
+            </li>
+            <li>
+              <Link to="/inscription">
+                <button className="btn_inscrit" aria-label="S'inscrire">Je m'inscris</button>
+              </Link>
+            </li>
+          </>
+        ) : (
+          <li>
+            <button className="btn_connect" onClick={handleLogout} aria-label="Se déconnecter">Je me déconnecte</button>
+          </li>
+        )}
+      </ul>
+    </div>
+  </nav>
+</header>
 
-
-              ):(
-                <li><button className="btn_connect" onClick={handleLogout}>Je me déconnecte</button></li>
-              )
-            }
-        </ul>
-        </div>
-        
-      </nav>
-    </header>
     );
 }
 
