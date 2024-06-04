@@ -26,15 +26,53 @@ function DashboardPage() {
     return <div>Chargement...</div>;
   }
 
+  const handleNewDessert = (newDessert) => {
+    if (newDessert.categorie === 'chocolat') {
+      setChocolat([...chocolat, newDessert]);
+    } else {
+      setFruit([...fruit, newDessert]);
+    }
+  };
+
   return (
     <>
       <Header />
       <main>
-        <h1>Dashboard</h1>
+        <h2>Dashboard</h2>
         <section>
-          <h2>Gestion des Desserts</h2>
+          <h3>Gestion des Desserts</h3>
           <div className="dessert-management">
-            {function AddDessertForm({ onNewDessert }) {
+            <AddDessertForm onNewDessert={handleNewDessert} />
+            {/* Display chocolat desserts */}
+            {chocolat.length > 0 && (
+              <div>
+                <h4>Desserts au chocolat:</h4>
+                <ul>
+                  {chocolat.map((dessert) => (
+                    <li key={dessert.id}>{dessert.nom}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {/* Display fruit desserts */}
+            {fruit.length > 0 && (
+              <div>
+                <h4>Desserts aux fruits:</h4>
+                <ul>
+                  {fruit.map((dessert) => (
+                    <li key={dessert.id}>{dessert.nom}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      </main>
+    </>
+  );
+}
+
+function AddDessertForm({ onNewDessert }) {
   const [nom, setNom] = useState('');
   const [description, setDescription] = useState('');
   const [categorie, setCategorie] = useState('chocolat'); // 'chocolat' est la valeur par défaut
@@ -111,14 +149,6 @@ function DashboardPage() {
       </div>
       <button type="submit">Ajouter</button>
     </form>
-  );
-}
-
-}
-          </div>
-        </section>
-      </main>
-    </>
   );
 }
 

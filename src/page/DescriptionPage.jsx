@@ -11,7 +11,6 @@ function DescriptionPage() {
 
   useEffect(() => {
     fetchDessert();
-    fetchCommentaires();
   }, []);
 
   const fetchDessert = async () => {
@@ -74,6 +73,7 @@ const Commentaires = ({ onCommentAdded }) => {
     }
   };
 
+ 
   return (
     <div>
       <h2>Commentaires</h2>
@@ -90,16 +90,16 @@ const Commentaires = ({ onCommentAdded }) => {
 
       {/* Espace pour afficher les commentaires */}
       <div className="commentaires-list">
-        {commentaires && commentaires.length > 0 ? (
-          commentaires.map((commentaire, index) => (
-            <div key={index} className="commentaire-item">
-              <p>{commentaire.commentaire}</p>
-            </div>
-          ))
-        ) : (
-          <p>Aucun commentaire</p>
-        )}
+  {commentaires && commentaires.length > 0 ? (
+    commentaires.map((comment) => (
+      <div key={comment.id} className="commentaire-item"> 
+        <p>{comment.texte}</p> 
       </div>
+    ))
+  ) : (
+    <p>Aucun commentaire</p>
+  )}
+</div>
     </div>
   );
 };
@@ -138,9 +138,18 @@ const Commentaires = ({ onCommentAdded }) => {
         ) : (
           <p>Dessert en cours de chargement</p>
         )}
+
+      {/* {dessert ? (
+          dessert.data.
+
+        ):(
+          <p>en cours de chargement</p>
+        )} */}
       </main>
     </>
   );
+
+ 
 }
 
 export default DescriptionPage;

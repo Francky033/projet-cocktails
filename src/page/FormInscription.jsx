@@ -20,7 +20,8 @@ const FormInscription = () => {
 const userToCreate = {
         username : username,
         password : password,
-        email : email}
+        email : email,
+        RoleId : 2}
 
         
 const userCreateToJson = JSON.stringify(userToCreate)
