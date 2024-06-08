@@ -8,6 +8,7 @@ import Fruit from './page/Fruit';
 import DescriptionPage from './page/DescriptionPage';
 import DashboardPage from './page/admin/Dashboardadmin';
 import AjoutDessert from "./page/admin/AjoutDessert";
+import SupCom from "./page/admin/SupCom";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/description/:id" element={<DescriptionPage/>} />
         <Route path="/admin" element={<DashboardPage/>} />
         <Route path="/ajout" element={<AjoutDessert/>} />
+        <Route path="/commentaire" element={<SupCom/>} />
 
 
 

@@ -60,94 +60,98 @@ function AjoutDessert({ onAddRecipe }) {
   };
 
   return (
-    
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="nom">Nom :</label>
-        <input
-          type="text"
-          id="nom"
-          value={nom}
-          onChange={(e) => setNom(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="description">Description :</label>
-        <textarea
-          id="description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="categorie">Catégorie :</label>
-        <select
-          id="categorie"
-          value={categorie}
-          onChange={(e) => setCategorie(e.target.value)}
-          required
-        >
-          <option value="">Choisissez une catégorie</option>
-          <option value="chocolat">Chocolat</option>
-          <option value="fruit">Fruit</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="image">Image URL :</label>
-        <input
-          type="text"
-          id="image"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="ingredients">Ingrédients :</label>
-        <textarea
-          id="ingredients"
-          value={ingredients}
-          onChange={(e) => setIngredients(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="duree">Durée :</label>
-        <input
-          type="text"
-          id="duree"
-          value={duree}
-          onChange={(e) => setDuree(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label htmlFor="difficulte">Difficulté :</label>
-        <select
-          id="difficulte"
-          value={difficulte}
-          onChange={(e) => setDifficulte(e.target.value)}
-          required
-        >
-          <option value="">Facile</option>
-          <option value="chocolat">Moyen</option>
-          <option value="fruit">Difficile</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="calories">Calories :</label>
-        <input
-          type="text"
-          id="calories"
-          value={calories}
-          onChange={(e) => setCalories(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Ajouter</button>
-    </form>
+    <>
+      <Header />
+      <h2>Ajoutez une nouvelle recette</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="nom">Nom :</label>
+          <input
+            type="text"
+            id="nom"
+            value={nom}
+            onChange={(e) => setNom(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="description">Description :</label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="categorie">Catégorie :</label>
+          <select
+            id="categorie"
+            value={categorie}
+            onChange={(e) => setCategorie(e.target.value)}
+            required
+          >
+            <option value="">Choisissez une catégorie</option>
+            <option value="chocolat">Chocolat</option>
+            <option value="fruit">Fruit</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="image">Image URL :</label>
+          <input
+            type="text"
+            id="image"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="ingredients">Ingrédients :</label>
+          <textarea
+            id="ingredients"
+            value={ingredients}
+            onChange={(e) => setIngredients(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="duree">Durée :</label>
+          <input
+            type="text"
+            id="duree"
+            value={duree}
+            onChange={(e) => setDuree(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="difficulte">Difficulté :</label>
+          <select
+            id="difficulte"
+            value={difficulte}
+            onChange={(e) => setDifficulte(e.target.value)}
+            required
+          >
+            <option value="">Sélectionnez la difficulté</option>
+            <option value="facile">Facile</option>
+            <option value="moyen">Moyen</option>
+            <option value="difficile">Difficile</option>
+          </select>
+        </div>
+        <div>
+          <label htmlFor="calories">Calories :</label>
+          <input
+            type="text"
+            id="calories"
+            value={calories}
+            onChange={(e) => setCalories(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Ajouter</button>
+      </form>
+    </>
   );
 }
 

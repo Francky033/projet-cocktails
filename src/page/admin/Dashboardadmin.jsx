@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Header from "../../component/Header";
-import AjoutDessert from "../admin/AjoutDessert";
+//import AjoutDessert from "../admin/AjoutDessert";
 
 
 function DashboardPage() {
@@ -19,8 +19,8 @@ function DashboardPage() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/inscription">
-                    <button className="btn_inscrit" aria-label="S'inscrire">Je m'inscris</button>
+                  <Link to="/commentaire">
+                    <button className="btn_inscrit" aria-label="S'inscrire">Modifier/Supprimer commentaires</button>
                   </Link>
                 </li>
               </>
