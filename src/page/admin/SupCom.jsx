@@ -11,12 +11,10 @@ function SupCom() {
   const fetchReviews = async () => {
     try {
       const response = await fetch('http://localhost:3003/api/reviews');
-      if (!response.ok) {
-        throw new Error('Erreur lors de la récupération des commentaires');
-      }
+      if (!response.ok) throw new Error('Erreur lors de la récupération des commentaires');
       const data = await response.json();
-      setReviews(data);
       console.log('Fetched reviews:', data); // Log fetched reviews
+      setReviews(data);
     } catch (error) {
       console.error('Fetch error:', error);
     }
@@ -27,14 +25,10 @@ function SupCom() {
     try {
       const response = await fetch(`http://localhost:3003/api/reviews/${id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newData),
       });
-      if (!response.ok) {
-        throw new Error('Erreur lors de la mise à jour du commentaire');
-      }
+      if (!response.ok) throw new Error('Erreur lors de la mise à jour du commentaire');
       const result = await response.json();
       console.log('Update result:', result); // Log update result
       fetchReviews();
@@ -49,9 +43,7 @@ function SupCom() {
       const response = await fetch(`http://localhost:3003/api/reviews/${id}`, {
         method: 'DELETE',
       });
-      if (!response.ok) {
-        throw new Error('Erreur lors de la suppression du commentaire');
-      }
+      if (!response.ok) throw new Error('Erreur lors de la suppression du commentaire');
       const result = await response.json();
       console.log('Delete result:', result); // Log delete result
       fetchReviews();

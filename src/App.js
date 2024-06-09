@@ -9,6 +9,8 @@ import DescriptionPage from './page/DescriptionPage';
 import DashboardPage from './page/admin/Dashboardadmin';
 import AjoutDessert from "./page/admin/AjoutDessert";
 import SupCom from "./page/admin/SupCom";
+import SupUser from "./page/admin/SupUser"
+import ModifierDessert from "./page/admin/ModifierDessert"
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/admin" element={<DashboardPage/>} />
         <Route path="/ajout" element={<AjoutDessert/>} />
         <Route path="/commentaire" element={<SupCom/>} />
+        <Route path="/utilisateur" element={<SupUser/>} />
+        <Route path="/recette" element={<ModifierDessert/>} />
 
 
 

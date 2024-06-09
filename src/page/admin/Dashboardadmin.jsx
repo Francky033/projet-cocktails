@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import Header from "../../component/Header";
-//import AjoutDessert from "../admin/AjoutDessert";
+import "./DashboardAdmin.css";
 
 
 function DashboardPage() {
@@ -11,7 +11,7 @@ function DashboardPage() {
       <main>
         <h2>Tableau de Bord</h2>
         <div>
-          <ul className="end_nav" aria-label="Options de connexion">
+          <ul className="end_nav dash" aria-label="Options dashboard">
               <>
                 <li>
                   <Link to="/ajout">
@@ -20,7 +20,17 @@ function DashboardPage() {
                 </li>
                 <li>
                   <Link to="/commentaire">
-                    <button className="btn_inscrit" aria-label="S'inscrire">Modifier/Supprimer commentaires</button>
+                    <button className="btn_inscrit" aria-label="Modifier/Supprimer">Modifier/Supprimer commentaires</button>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/utilisateur">
+                    <button className="btn_connect" aria-label="Utilisateur">Supprimer Utilisateurs</button>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/recette">
+                    <button className="btn_inscrit" aria-label="Recette">Modifier/Supprimer Recettes</button>
                   </Link>
                 </li>
               </>
