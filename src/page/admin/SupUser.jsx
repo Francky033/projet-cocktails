@@ -32,7 +32,13 @@ function SupUser() {
     }
   };
 
-  const handleDeleteUser = async (id) => {
+  const handleDeleteUser = async (id, username) => {
+    // Afficher une boîte de dialogue de confirmation
+    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur ${username} ?`);
+    if (!confirmDelete) {
+      return; // Annuler la suppression si l'utilisateur clique sur "Annuler"
+    }
+
     console.log(`Deleting user ${id}`);
     try {
       const response = await fetch(`http://localhost:3003/api/users/${id}`, {
@@ -46,14 +52,13 @@ function SupUser() {
       }
       const result = await response.json();
       console.log('Delete result:', result);
-  
+
       // Mise à jour de l'état pour refléter la suppression sans une nouvelle requête
       setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
     } catch (error) {
       console.error('Delete error:', error);
     }
   };
-  
 
   return (
     <>
@@ -64,7 +69,7 @@ function SupUser() {
           users.map(user => (
             <div key={user.id}>
               <p><strong>{user.username}</strong> ({user.email})</p>
-              <button onClick={() => handleDeleteUser(user.id)}>Supprimer</button>
+              <button onClick={() => handleDeleteUser(user.id, user.username)}>Supprimer</button>
             </div>
           ))
         ) : (
@@ -76,4 +81,3 @@ function SupUser() {
 }
 
 export default SupUser;
-

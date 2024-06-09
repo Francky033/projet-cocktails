@@ -35,68 +35,33 @@ function DescriptionPage() {
     }
   };
 
-  const Commentaires = ({ onCommentAdded }) => {
-    const [commentaire, setCommentaire] = useState("");
+  const handleCommentaire = async (commentaire) => {
+    if (!token) {
+      console.error("Token non trouvé");
+      return;
+    }
 
-    const handleCommentaire = async (event) => {
-      event.preventDefault();
-
-      if (!token) {
-        console.error("Token non trouvé");
-        return;
-      }
-
-      const commentaireCreate = {
-        commentaire: commentaire,
-        DessertId: id
-      };
-
-      try {
-        const response = await fetch(`http://localhost:3003/api/reviews`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(commentaireCreate)
-        });
-
-        const result = await response.json();
-        console.log("Commentaire ajouté : ", result); // Debug
-        onCommentAdded(); // Callback pour rafraîchir les commentaires
-        setCommentaire(""); // Efface le champ de commentaire après l'envoi
-      } catch (error) {
-        console.error("Erreur lors de l'envoi du commentaire :", error);
-      }
+    const commentaireCreate = {
+      commentaire,
+      dessertId: id
     };
 
-    return (
-      <div>
-        <h2>Commentaires</h2>
-        <form className="com" onSubmit={handleCommentaire}>
-          <textarea
-            placeholder="Donnez votre avis"
-            type="text"
-            name="commentaire"
-            value={commentaire}
-            onChange={(e) => setCommentaire(e.target.value)}
-          />
-          <button className="btn_connect" type="submit">Commenter</button>
-        </form>
+    try {
+      const response = await fetch(`http://localhost:3003/api/reviews`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(commentaireCreate)
+      });
 
-        <div className="commentaires-list">
-          {commentaires && commentaires.length > 0 ? (
-            commentaires.map((comment) => (
-              <div key={comment.id} className="commentaire-item">
-                <p>{comment.commentaire}</p>
-              </div>
-            ))
-          ) : (
-            <p>Aucun commentaire</p>
-          )}
-        </div>
-      </div>
-    );
+      const result = await response.json();
+      console.log("Commentaire ajouté : ", result); // Debug
+      fetchCommentaires(); // Rafraîchir les commentaires après ajout
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du commentaire :", error);
+    }
   };
 
   return (
@@ -125,7 +90,38 @@ function DescriptionPage() {
               <p className="prepa">{dessert.preparation}</p>
             </article>
 
-            <Commentaires onCommentAdded={fetchCommentaires} />
+            {token && (
+              <div className="commentaire-section">
+                <h2>Ajouter un commentaire</h2>
+                <form className="com" onSubmit={(e) => {
+                  e.preventDefault();
+                  const commentaire = e.target.commentaire.value;
+                  handleCommentaire(commentaire);
+                  e.target.commentaire.value = '';
+                }}>
+                  <textarea
+                    placeholder="Donnez votre avis"
+                    type="text"
+                    name="commentaire"
+                  />
+                  <button className="btn_connect" type="submit">Commenter</button>
+                </form>
+              </div>
+            )}
+
+            <div className="commentaires-list">
+              <h2>Commentaires</h2>
+              {commentaires && commentaires.length > 0 ? (
+                commentaires.map((comment) => (
+                  <div key={comment.id} className="commentaire-item">
+                    <p>{comment.commentaire}</p>
+                    
+                  </div>
+                ))
+              ) : (
+                <p>Aucun commentaire</p>
+              )}
+            </div>
           </>
         ) : (
           <p>Dessert en cours de chargement</p>
@@ -136,4 +132,3 @@ function DescriptionPage() {
 }
 
 export default DescriptionPage;
-
