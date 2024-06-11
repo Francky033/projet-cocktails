@@ -34,27 +34,30 @@ function SupUser() {
 
   const handleDeleteUser = async (id, username) => {
     // Afficher une boîte de dialogue de confirmation
-    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur ${username} ?`);
+    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur ${ username} ?`);
     if (!confirmDelete) {
       return; // Annuler la suppression si l'utilisateur clique sur "Annuler"
     }
 
-    console.log(`Deleting user ${id}`);
     try {
-      const response = await fetch(`http://localhost:3003/api/users/${id}`, {
+        const response = await fetch(`http://localhost:3003/api/users/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      if (!response.ok) {
-        throw new Error('Erreur lors de la suppression de l\'utilisateur');
-      }
-      const result = await response.json();
-      console.log('Delete result:', result);
+      console.log("ici?");
+        if (!response.ok) {
+          
+          throw new Error('Erreur lors de la suppression de l\'utilisateur');
+        }
+        const result = await response.json();
+        console.log('Delete result:', result);
 
-      // Mise à jour de l'état pour refléter la suppression sans une nouvelle requête
-      setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
+        
+        console.log(`Deleting user ${id} ?`);
+        // Mise à jour de l'état pour refléter la suppression sans une nouvelle requête
+        setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
     } catch (error) {
       console.error('Delete error:', error);
     }

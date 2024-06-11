@@ -1,0 +1,20 @@
+
+  .commentaires-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .commentaire-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .commentaire-item span {
+    flex: 1;
+  }
+  
+  .commentaire-item button {
+    margin-left: 10px;
+  }
+  

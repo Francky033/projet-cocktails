@@ -49,3 +49,22 @@
     width: 25%;
     height: 50%;
 }
+
+
+.commentaire-section {
+  margin-bottom: 20px;
+}
+
+.commentaires-list {
+  margin-top: 20px;
+}
+
+.commentaire-item {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.commentaire-item p {
+  margin: 0;
+}

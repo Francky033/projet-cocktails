@@ -1,78 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../../component/Header';
+import { fetchCommentaires, deleteCommentaire, updateCommentaire } from "../admin/api";
+import "./SupCom.css";
 
 function SupCom() {
-  const [reviews, setReviews] = useState([]);
+  const [commentaires, setCommentaires] = useState([]);
+  const [editCommentaire, setEditCommentaire] = useState(null);
+  const [updatedText, setUpdatedText] = useState('');
 
   useEffect(() => {
-    fetchReviews();
+    const fetchData = async () => {
+      try {
+        const data = await fetchCommentaires();
+        setCommentaires(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des commentaires :", error);
+      }
+    };
+    fetchData();
   }, []);
 
-  const fetchReviews = async () => {
+  const handleDelete = async (id) => {
     try {
-      const response = await fetch('http://localhost:3003/api/reviews');
-      if (!response.ok) throw new Error('Erreur lors de la récupération des commentaires');
-      const data = await response.json();
-      console.log('Fetched reviews:', data); // Log fetched reviews
-      setReviews(data);
+      await deleteCommentaire(id);
+      setCommentaires(commentaires.filter((comment) => comment.id !== id));
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error("Erreur lors de la suppression du commentaire :", error);
     }
   };
 
-  const handleUpdateReview = async (id, newData) => {
-    console.log(`Updating review ${id} with data:`, newData); // Log update action
+  const handleUpdate = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3003/api/reviews/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newData),
-      });
-      if (!response.ok) throw new Error('Erreur lors de la mise à jour du commentaire');
-      const result = await response.json();
-      console.log('Update result:', result); // Log update result
-      fetchReviews();
+      const updated = await updateCommentaire(id, { commentaire: updatedText });
+      setCommentaires(commentaires.map((comment) => (comment.id === id ? updated : comment)));
+      setEditCommentaire(null);
     } catch (error) {
-      console.error('Update error:', error);
+      console.error("Erreur lors de la mise à jour du commentaire :", error);
     }
   };
 
-  const handleDeleteReview = async (id) => {
-    console.log(`Deleting review ${id}`); // Log delete action
-    try {
-      const response = await fetch(`http://localhost:3003/api/reviews/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Erreur lors de la suppression du commentaire');
-      const result = await response.json();
-      console.log('Delete result:', result); // Log delete result
-      fetchReviews();
-    } catch (error) {
-      console.error('Delete error:', error);
-    }
+  const startEditing = (comment) => {
+    setEditCommentaire(comment.id);
+    setUpdatedText(comment.commentaire);
   };
 
   return (
-    <>
+    <div className="dashboard">
       <Header />
-      <div>
-        <h2>Modifier/Supprimer Commentaires</h2>
-        {reviews.length > 0 ? (
-          reviews.map(review => (
-            <div key={review.id}>
-              <p><strong>{review.User?.username || 'Utilisateur inconnu'}</strong> a écrit :</p>
-              <p>{review.content}</p>
-              <p>le <em>{new Date(review.createdAt).toLocaleString()}</em></p>
-              <button onClick={() => handleUpdateReview(review.id, { content: 'Nouveau contenu' })}>Modifier</button>
-              <button onClick={() => handleDeleteReview(review.id)}>Supprimer</button>
-            </div>
-          ))
-        ) : (
-          <p>Aucun commentaire trouvé.</p>
-        )}
-      </div>
-    </>
+      <h2>Tableau de bord des commentaires</h2>
+      <ul className="commentaires-list">
+        {commentaires.map((comment) => (
+          <li key={comment.id} className="commentaire-item">
+            <span>{comment.User.username}</span> {/* Affichage du nom de l'utilisateur */}
+            <span>{comment.commentaire}</span>
+            {editCommentaire === comment.id ? (
+              <div>
+                <input
+                  type="text"
+                  value={updatedText}
+                  onChange={(e) => setUpdatedText(e.target.value)}
+                />
+                <button onClick={() => handleUpdate(comment.id)}>Sauvegarder</button>
+                <button onClick={() => setEditCommentaire(null)}>Annuler</button>
+              </div>
+            ) : (
+              <>
+                <button onClick={() => startEditing(comment)}>Modifier</button>
+                <button onClick={() => handleDelete(comment.id)}>Supprimer</button>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
 export default SupCom;
+
+

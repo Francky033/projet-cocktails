@@ -26,7 +26,7 @@ function DescriptionPage() {
 
   const fetchCommentaires = async () => {
     try {
-      const response = await fetch(`http://localhost:3003/api/reviews/${id}`);
+      const response = await fetch(`http://localhost:3003/api/reviews?DessertId=${id}`);
       const data = await response.json();
       console.log("Commentaires récupérés : ", data); // Debug
       setCommentaires(Array.isArray(data) ? data : [data]);
@@ -43,7 +43,7 @@ function DescriptionPage() {
 
     const commentaireCreate = {
       commentaire,
-      dessertId: id
+      DessertId: id
     };
 
     try {
@@ -96,6 +96,7 @@ function DescriptionPage() {
                 <form className="com" onSubmit={(e) => {
                   e.preventDefault();
                   const commentaire = e.target.commentaire.value;
+                  console.log(commentaire, commentaires)
                   handleCommentaire(commentaire);
                   e.target.commentaire.value = '';
                 }}>
@@ -110,12 +111,11 @@ function DescriptionPage() {
             )}
 
             <div className="commentaires-list">
-              <h2>Commentaires</h2>
+            <h2>Commentaires</h2>
               {commentaires && commentaires.length > 0 ? (
                 commentaires.map((comment) => (
                   <div key={comment.id} className="commentaire-item">
-                    <p>{comment.commentaire}</p>
-                    
+                    <p><strong>{comment.User.username}</strong>: {comment.commentaire}</p>
                   </div>
                 ))
               ) : (
