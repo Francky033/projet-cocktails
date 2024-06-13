@@ -51,7 +51,7 @@ function SupCom() {
       <ul className="commentaires-list">
         {commentaires.map((comment) => (
           <li key={comment.id} className="commentaire-item">
-            <span>{comment.User.username}</span> {/* Affichage du nom de l'utilisateur */}
+            <span>{comment.user ? comment.user.username : 'Utilisateur inconnu'}</span> {/* Assurez-vous que l'alias est correct */}
             <span>{comment.commentaire}</span>
             {editCommentaire === comment.id ? (
               <div>
@@ -77,5 +77,4 @@ function SupCom() {
 }
 
 export default SupCom;
-
 

@@ -115,7 +115,7 @@ function DescriptionPage() {
               {commentaires && commentaires.length > 0 ? (
                 commentaires.map((comment) => (
                   <div key={comment.id} className="commentaire-item">
-                    <p><strong>{comment.User.username}</strong>: {comment.commentaire}</p>
+                    <p>: {comment.commentaire}</p>
                   </div>
                 ))
               ) : (

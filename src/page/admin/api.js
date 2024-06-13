@@ -9,20 +9,22 @@ export const fetchCommentaires = async () => {
 export const deleteCommentaire = async (id) => {
   const response = await fetch(`${API_URL}/reviews/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`, // Ajoutez l'en-tête d'autorisation
+    },
   });
   if (!response.ok) throw new Error('Erreur lors de la suppression du commentaire');
 };
 
 export const updateCommentaire = async (id, updatedComment) => {
-    
   const response = await fetch(`${API_URL}/reviews/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`, // Ajoutez l'en-tête d'autorisation
     },
     body: JSON.stringify(updatedComment),
   });
   if (!response.ok) throw new Error('Erreur lors de la mise à jour du commentaire');
-  
   return response.json();
 };
