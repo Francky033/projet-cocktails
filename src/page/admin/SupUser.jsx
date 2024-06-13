@@ -6,19 +6,19 @@ function SupUser() {
   const [token, setToken] = useState('');
 
   useEffect(() => {
-    fetchUsers();
     // Charger le token JWT depuis le stockage local ou les cookies
-    const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem('jwt');
     if (storedToken) {
       setToken(storedToken);
+      fetchUsers(storedToken);
     }
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (storedToken) => {
     try {
       const response = await fetch('http://localhost:3003/api/users', {
         headers: {
-          Authorization: `Bearer ${token}` // Inclure le token JWT dans l'en-tête
+          Authorization: `Bearer ${storedToken}`
         }
       });
       if (!response.ok) {
@@ -34,34 +34,32 @@ function SupUser() {
 
   const handleDeleteUser = async (id, username) => {
     // Afficher une boîte de dialogue de confirmation
-    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur ${ username} ?`);
+    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer l'utilisateur ${username} ?`);
     if (!confirmDelete) {
       return; // Annuler la suppression si l'utilisateur clique sur "Annuler"
     }
-
+  
     try {
-        const response = await fetch(`http://localhost:3003/api/users/${id}`, {
+      const response = await fetch(`http://localhost:3003/api/users/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("ici?");
-        if (!response.ok) {
-          
-          throw new Error('Erreur lors de la suppression de l\'utilisateur');
-        }
-        const result = await response.json();
-        console.log('Delete result:', result);
-
-        
-        console.log(`Deleting user ${id} ?`);
-        // Mise à jour de l'état pour refléter la suppression sans une nouvelle requête
-        setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
+  
+      if (!response.ok) {
+        const errorMessage = await response.text();
+        throw new Error(`Erreur lors de la suppression de l'utilisateur : ${errorMessage}`);
+      }
+  
+      // Mise à jour de l'état pour refléter la suppression sans une nouvelle requête
+      setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
+      console.log(`Utilisateur ${id} supprimé avec succès`);
     } catch (error) {
-      console.error('Delete error:', error);
+      console.error('Erreur lors de la suppression de l\'utilisateur :', error.message);
     }
   };
+  
 
   return (
     <>
