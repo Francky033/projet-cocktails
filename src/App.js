@@ -12,7 +12,7 @@ import AjoutDessert from "./page/admin/AjoutDessert";
 import SupCom from "./page/admin/SupCom";
 import SupUser from "./page/admin/SupUser";
 import ModifierDessert from "./page/admin/ModifierDessert";
-import PrivateRoute from './component/PrivateRoute';
+import PrivateRoute from './page/admin/PrivateRoom';
 
 function App() {
   return (

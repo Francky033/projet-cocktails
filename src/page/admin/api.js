@@ -29,21 +29,13 @@ export const updateCommentaire = async (id, updatedComment) => {
   return response.json();
 };
 
-
 export const createDessert = async (formData) => {
   try {
-    // Vérification des champs requis
-    const { nom, description, categorie, ingredients, duree, difficulte, calories } = formData;
-    if (!nom || !description || !categorie || !ingredients || !duree || !difficulte || !calories) {
-      throw new Error('Tous les champs doivent être remplis');
-    }
-
     const response = await fetch(`${API_URL}/desserts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Ajoutez ici l'authentification 
-         //'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`, // Ajoutez l'en-tête d'autorisation
       },
       body: JSON.stringify(formData)
     });
@@ -59,14 +51,12 @@ export const createDessert = async (formData) => {
   }
 };
 
-
 export const uploadImage = async (formData) => {
   try {
     const response = await fetch(`${API_URL}/desserts/image`, {
       method: 'POST',
       headers: {
-        // Ajoutez ici l'authentification
-        //'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`, // Ajoutez l'en-tête d'autorisation
       },
       body: formData
     });
@@ -81,3 +71,44 @@ export const uploadImage = async (formData) => {
     throw error;
   }
 };
+
+export const deleteUser = async (id) => {
+  try {
+    const response = await fetch(`${API_URL}/users/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`, // Ajoutez l'en-tête d'autorisation
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const findAllUsers = async () => {
+  try {
+    const response = await fetch(`${API_URL}/users`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`, // Ajoutez l'en-tête d'autorisation
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+
