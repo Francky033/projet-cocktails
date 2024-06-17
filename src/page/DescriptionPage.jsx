@@ -16,7 +16,7 @@ function DescriptionPage() {
 
   const fetchDessert = async () => {
     try {
-      const response = await fetch(`http://localhost:3003/api/dessert/${id}`);
+      const response = await fetch(`http://localhost:3003/api/desserts/${id}`);
       const data = await response.json();
       setDessert(data.data);
     } catch (error) {
@@ -28,7 +28,6 @@ function DescriptionPage() {
     try {
       const response = await fetch(`http://localhost:3003/api/reviews?DessertId=${id}`);
       const data = await response.json();
-      console.log("Commentaires récupérés : ", data); // Debug
       setCommentaires(Array.isArray(data) ? data : [data]);
     } catch (error) {
       console.error("Erreur lors de la récupération des commentaires :", error);
@@ -96,7 +95,6 @@ function DescriptionPage() {
                 <form className="com" onSubmit={(e) => {
                   e.preventDefault();
                   const commentaire = e.target.commentaire.value;
-                  console.log(commentaire, commentaires)
                   handleCommentaire(commentaire);
                   e.target.commentaire.value = '';
                 }}>
@@ -111,11 +109,12 @@ function DescriptionPage() {
             )}
 
             <div className="commentaires-list">
-            <h2>Commentaires</h2>
+              <h2>Commentaires</h2>
               {commentaires && commentaires.length > 0 ? (
                 commentaires.map((comment) => (
                   <div key={comment.id} className="commentaire-item">
                     <p><strong>{comment.User.username}:</strong> {comment.commentaire}</p>
+                    
                   </div>
                 ))
               ) : (
@@ -130,5 +129,6 @@ function DescriptionPage() {
     </>
   );
 }
+
 
 export default DescriptionPage;

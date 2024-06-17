@@ -12,7 +12,7 @@ function ModifierDessert() {
 
   const fetchDesserts = async () => {
     try {
-      const response = await fetch(`http://localhost:3003/api/dessert`);
+      const response = await fetch(`http://localhost:3003/api/desserts`);
       if (!response.ok) {
         throw new Error('Erreur lors de la récupération des desserts');
       }

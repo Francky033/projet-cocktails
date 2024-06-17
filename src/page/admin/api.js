@@ -28,3 +28,56 @@ export const updateCommentaire = async (id, updatedComment) => {
   if (!response.ok) throw new Error('Erreur lors de la mise à jour du commentaire');
   return response.json();
 };
+
+
+export const createDessert = async (formData) => {
+  try {
+    // Vérification des champs requis
+    const { nom, description, categorie, ingredients, duree, difficulte, calories } = formData;
+    if (!nom || !description || !categorie || !ingredients || !duree || !difficulte || !calories) {
+      throw new Error('Tous les champs doivent être remplis');
+    }
+
+    const response = await fetch(`${API_URL}/desserts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Ajoutez ici l'authentification 
+         //'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: JSON.stringify(formData)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+export const uploadImage = async (formData) => {
+  try {
+    const response = await fetch(`${API_URL}/desserts/image`, {
+      method: 'POST',
+      headers: {
+        // Ajoutez ici l'authentification
+        //'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: formData
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    throw error;
+  }
+};

@@ -11,7 +11,7 @@ function Chocolat() {
 const [chocolat, setChocolat] = useState([])
   useEffect(()=>{
     (async()=>{
-        const responseOfFetch = await fetch(`http://localhost:3003/api/dessert`)
+        const responseOfFetch = await fetch(`http://localhost:3003/api/desserts`)
         const responseToJson = await responseOfFetch.json()
 
           setChocolat(

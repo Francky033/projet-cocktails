@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Header from "../../component/Header";
 
-function AjoutDessert({ onAddRecipe }) {
+function AjoutDessert({ onAddDessert }) {
   const [nom, setNom] = useState('');
   const [description, setDescription] = useState('');
   const [categorie, setCategorie] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   const [ingredients, setIngredients] = useState('');
   const [duree, setDuree] = useState('');
   const [difficulte, setDifficulte] = useState('');
@@ -13,57 +13,71 @@ function AjoutDessert({ onAddRecipe }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const newRecipe = {
-      nom,
-      description,
-      categorie,
-      image,
-      ingredients,
-      duree,
-      difficulte,
-      calories
-    };
-
+  
+    // Vérifier que tous les champs requis sont remplis
+    if (!nom || !description || !categorie || !ingredients || !duree || !difficulte || !calories) {
+      console.error('Tous les champs doivent être remplis');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('nom', nom);
+    formData.append('description', description);
+    formData.append('categorie', categorie);
+  
+    // Ajouter l'image uniquement si elle est sélectionnée
+    if (image) {
+      formData.append('image', image);
+    }
+  
+    // Convertir les ingrédients en JSON
+    const ingredientsArray = ingredients.split(',').map(ingredient => ingredient.trim());
+    formData.append('ingredients', JSON.stringify(ingredientsArray));
+  
+    formData.append('duree', duree);
+    formData.append('difficulte', difficulte);
+    formData.append('calories', calories);
+  
     try {
-      const response = await fetch('http://localhost:3003/api/recipes', {
+      const response = await fetch('http://localhost:3003/api/desserts', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('jwt')}`
         },
-        body: JSON.stringify(newRecipe),
+        body: formData,
       });
-
+  
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message}`);
       }
-
-      // Votre logique après l'envoi réussi
-      console.log('Recette ajoutée avec succès:', await response.json());
-
-      // Réinitialiser le formulaire
+  
+      const result = await response.json();
+      console.log('Dessert ajouté avec succès:', result);
+  
+      // Réinitialiser les champs du formulaire après succès
       setNom('');
       setDescription('');
       setCategorie('');
-      setImage('');
+      setImage(null);
       setIngredients('');
       setDuree('');
       setDifficulte('');
       setCalories('');
-
-      // Appeler onAddRecipe si nécessaire pour mettre à jour l'état parent
-      onAddRecipe(newRecipe);
-
+  
+      // Appeler la fonction pour ajouter le dessert à la liste des desserts
+      onAddDessert(result);
     } catch (error) {
-      console.error('Erreur lors de l\'ajout de la recette:', error);
+      console.error('Erreur lors de l\'ajout du dessert:', error);
     }
   };
+  
 
   return (
     <>
       <Header />
-      <h2>Ajoutez une nouvelle recette</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>Ajoutez un nouveau dessert</h2>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div>
           <label htmlFor="nom">Nom :</label>
           <input
@@ -97,12 +111,11 @@ function AjoutDessert({ onAddRecipe }) {
           </select>
         </div>
         <div>
-          <label htmlFor="image">Image URL :</label>
+          <label htmlFor="image">Image :</label>
           <input
-            type="text"
+            type="file"
             id="image"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setImage(e.target.files[0])}
             required
           />
         </div>
@@ -118,7 +131,7 @@ function AjoutDessert({ onAddRecipe }) {
         <div>
           <label htmlFor="duree">Durée :</label>
           <input
-            type="text"
+            type="number"
             id="duree"
             value={duree}
             onChange={(e) => setDuree(e.target.value)}
@@ -142,7 +155,7 @@ function AjoutDessert({ onAddRecipe }) {
         <div>
           <label htmlFor="calories">Calories :</label>
           <input
-            type="text"
+            type="number"
             id="calories"
             value={calories}
             onChange={(e) => setCalories(e.target.value)}
@@ -156,3 +169,4 @@ function AjoutDessert({ onAddRecipe }) {
 }
 
 export default AjoutDessert;
+
